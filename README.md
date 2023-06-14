@@ -1,3 +1,8 @@
+# Goal of project
+
+This project has different components which will be used for code review on the interview to understand level of
+developer
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
