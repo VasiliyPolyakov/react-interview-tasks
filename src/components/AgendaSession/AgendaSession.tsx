@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AgendaSession.css";
-import {Types} from "../../App";
+import { Types } from "../../App";
 
 export interface AgendaSessionProps {
   content: {
@@ -25,10 +25,10 @@ export interface AgendaSessionProps {
 }
 
 export default function AgendaSession({
-                                        sessionsIndexMap,
-                                        content,
-                                        clickSessionHandler,
-                                      }: AgendaSessionProps) {
+  sessionsIndexMap,
+  content,
+  clickSessionHandler,
+}: AgendaSessionProps) {
   const mainItemRef = useRef<HTMLDivElement>(null);
   const [itemTruncated, setItemTruncated] = useState(false);
   const [itemHeight, setItemHeight] = useState(getItemHeight());
@@ -40,41 +40,41 @@ export default function AgendaSession({
   }, []);
 
   function getItemHeight(): number {
-    const {duration, relativeHeightOnGridView, type} = content || {};
+    const { duration, relativeHeightOnGridView, type } = content || {};
     const scaleFactor = duration < 5 ? 8 : 6;
 
     return type === "FULL" && relativeHeightOnGridView
-        ? duration * scaleFactor - 5 + relativeHeightOnGridView
-        : 55;
+      ? duration * scaleFactor - 5 + relativeHeightOnGridView
+      : 55;
   }
 
   function getItemStyles() {
-    const {type, duration} = content || {};
+    const { type, duration } = content || {};
     const mainItemRefCurrent = mainItemRef.current;
 
     if (mainItemRefCurrent) {
       const itemContentWrapperHeight =
-          mainItemRefCurrent.children[0].clientHeight;
+        mainItemRefCurrent.children[0].clientHeight;
 
       setItemHeight(getItemHeight());
       setItemTruncated(itemContentWrapperHeight > itemHeight);
       setSpecificItemClass(
-          type === "FULL" && duration < 5 && itemTruncated
-              ? `shortest-main-agenda-item shortest-main-agenda-item--${duration}`
-              : ""
+        type === "FULL" && duration < 5 && itemTruncated
+          ? `shortest-main-agenda-item shortest-main-agenda-item--${duration}`
+          : ""
       );
     }
   }
 
   function sessionClick() {
-    const {type, enabled, index} = content || {};
+    const { type, enabled, index } = content || {};
     const session = sessionsIndexMap[index];
 
     if (
-        type !== "SHORT" &&
-        enabled &&
-        typeof clickSessionHandler === "function" &&
-        session !== undefined
+      type !== "SHORT" &&
+      enabled &&
+      typeof clickSessionHandler === "function" &&
+      session !== undefined
     ) {
       clickSessionHandler(session);
     }
@@ -95,47 +95,47 @@ export default function AgendaSession({
   const speakersToRender = speakers.filter(Boolean);
 
   return (
-      <div
-          className={`c-agenda-main-item c-agenda-main-item-${type} ${
-              itemTruncated ? "truncated" : ""
-          } ${specificItemClass}`}
-          ref={mainItemRef}
-          style={{height: sessionHeight}}
-          onClick={sessionClick}
-      >
-        <div className="c-agenda-stream-item-inner">
-          <div className="agenda-item-heading">
-            <div>
-              {type === "FULL" ? (
-                  <div>Full session</div>
-              ) : type === "SHORT" ? (
-                  <div>Short Session</div>
-              ) : (
-                  <div>Session</div>
-              )}
-            </div>
-            {isFreeItem && <span className="agenda-item-free-label">Free</span>}
-            <div className="agenda-item-title">{title}</div>
+    <div
+      className={`c-agenda-main-item c-agenda-main-item-${type} ${
+        itemTruncated ? "truncated" : ""
+      } ${specificItemClass}`}
+      ref={mainItemRef}
+      style={{ height: sessionHeight }}
+      onClick={sessionClick}
+    >
+      <div className="c-agenda-stream-item-inner">
+        <div className="agenda-item-heading">
+          <div>
+            {type === "FULL" ? (
+              <div>Full session</div>
+            ) : type === "SHORT" ? (
+              <div>Short Session</div>
+            ) : (
+              <div>Session</div>
+            )}
           </div>
+          {isFreeItem && <span className="agenda-item-free-label">Free</span>}
+          <div className="agenda-item-title">{title}</div>
+        </div>
 
-          {showDescription && description.length && (
-              <div className="row agenda-item-description">{description}</div>
-          )}
+        {showDescription && description.length && (
+          <div className="row agenda-item-description">{description}</div>
+        )}
 
-          <div className="agenda-item-speakers">
-            <div>List of Speakers:</div>
-            {showSpeakers &&
-                speakersToRender.length &&
-                speakersToRender.map(({name, jobTitle}, index) => {
-                  return (
-                      <div key={index} className="agenda-item-speakers__item">
-                        <div>{name}</div>
-                        <div>{jobTitle}</div>
-                      </div>
-                  );
-                })}
-          </div>
+        <div className="agenda-item-speakers">
+          <div>List of Speakers:</div>
+          {showSpeakers &&
+            speakersToRender.length &&
+            speakersToRender.map(({ name, jobTitle }, index) => {
+              return (
+                <div key={index} className="agenda-item-speakers__item">
+                  <div>{name}</div>
+                  <div>{jobTitle}</div>
+                </div>
+              );
+            })}
         </div>
       </div>
+    </div>
   );
 }
