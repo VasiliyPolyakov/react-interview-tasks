@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AgendaSession.css";
-import { Types } from "../../App";
+import { Types } from "../App/App";
 
 export interface AgendaSessionProps {
   content: {
