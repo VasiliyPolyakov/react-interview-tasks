@@ -1,5 +1,5 @@
 import React from "react";
-import AgendaSession from "./components/AgendaSession/AgendaSession";
+import AgendaSession from "../AgendaSessions/AgendaSession";
 import "./App.css";
 
 export enum Types {
@@ -39,20 +39,19 @@ const sessionIndexMapStringType = {
 };
 
 const sessionIndexMapObjectType = {
-  1: {id: "1"},
-  2: {id: "2"},
+  1: { id: "1" },
+  2: { id: "2" },
 };
 
 function App() {
   return (
-      <div className="App">
-        <AgendaSession
-            content={content}
-            sessionsIndexMap={sessionIndexMapStringType}
-            clickSessionHandler={() => {
-            }}
-        />
-      </div>
+    <div className="App">
+      <AgendaSession
+        content={content}
+        sessionsIndexMap={sessionIndexMapStringType}
+        clickSessionHandler={() => {}}
+      />
+    </div>
   );
 }
 
