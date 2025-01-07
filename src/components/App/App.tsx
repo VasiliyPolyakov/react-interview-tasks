@@ -34,13 +34,18 @@ const content = {
 };
 
 const sessionIndexMapStringType = {
-  1: "Hi",
-  2: "Buy",
+  1: "1",
+  2: "2",
 };
 
 const sessionIndexMapObjectType = {
   1: { id: "1" },
   2: { id: "2" },
+};
+
+const sessionIndexMapArrayType = {
+  1: ['1'],
+  2: ['2'],
 };
 
 function App() {

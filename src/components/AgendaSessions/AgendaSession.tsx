@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AgendaSession.css";
-import { Types } from "../App/App";
 
 export interface AgendaSessionProps {
   content: {
     labels: string;
-    type: keyof typeof Types;
-    title: string;
+    type: "FULL" | "SHORT" | 'DEFAULT';
+    title?: string;
     description: string;
     showDescription: boolean;
     showSpeakers: boolean;
@@ -20,15 +19,18 @@ export interface AgendaSessionProps {
       id: string;
     }[];
   };
-  clickSessionHandler: (param: string) => void;
+  clickSessionHandler: (param: any) => void;
+  clickToSpeaker?: (param: any) => void;
   sessionsIndexMap: Record<number, string>;
 }
 
-export default function AgendaSession({
-  sessionsIndexMap,
-  content,
-  clickSessionHandler,
-}: AgendaSessionProps) {
+export default function AgendaSession(props: AgendaSessionProps) {
+  const {
+    sessionsIndexMap,
+    content,
+    clickSessionHandler,
+    clickToSpeaker,
+  } = props;
   const mainItemRef = useRef<HTMLDivElement>(null);
   const [itemTruncated, setItemTruncated] = useState(false);
   const [itemHeight, setItemHeight] = useState(getItemHeight());
@@ -80,7 +82,7 @@ export default function AgendaSession({
     }
   }
 
-  const {
+  let {
     labels = "",
     type,
     title,
@@ -88,7 +90,11 @@ export default function AgendaSession({
     description = "",
     showSpeakers,
     speakers = [],
-  } = content || {};
+  } = props.content || {};
+
+  if (!title) {
+    title = `Session - ${type}`
+  }
 
   const isFreeItem = labels.indexOf("Free") >= 0;
   const sessionHeight = type === "DEFAULT" ? "auto" : itemHeight;
@@ -128,7 +134,7 @@ export default function AgendaSession({
             speakersToRender.length &&
             speakersToRender.map(({ name, jobTitle }, index) => {
               return (
-                <div key={index} className="agenda-item-speakers__item">
+                <div key={index} onClick={() => clickToSpeaker && clickToSpeaker(name)} className="agenda-item-speakers__item">
                   <div>{name}</div>
                   <div>{jobTitle}</div>
                 </div>
