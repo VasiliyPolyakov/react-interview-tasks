@@ -50,7 +50,7 @@ export default function AgendaSession(props: AgendaSessionProps) {
       : 55;
   }
 
-  function getItemStyles() {
+  const getItemStyles = () => {
     const { type, duration } = content || {};
     const mainItemRefCurrent = mainItemRef.current;
 
