@@ -53,7 +53,7 @@ function App() {
     <div className="App">
       <AgendaSession
         content={content}
-        sessionsIndexMap={sessionIndexMapStringType}
+        sessionsMetadataMap={sessionIndexMapStringType}
         clickSessionHandler={() => {}}
       />
     </div>

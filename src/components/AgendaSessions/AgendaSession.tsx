@@ -19,17 +19,19 @@ export interface AgendaSessionProps {
       id: string;
     }[];
   };
-  clickSessionHandler: (param: any) => void;
-  clickToSpeaker?: (param: any) => void;
-  sessionsIndexMap: Record<number, string>;
+  clickSessionHandler: (session: string) => void;
+  clickToSpeaker?: (name: string) => void;
+  sessionsMetadataMap: Record<number, string>;
+  className?: string;
 }
 
 export default function AgendaSession(props: AgendaSessionProps) {
   const {
-    sessionsIndexMap,
+    sessionsMetadataMap,
     content,
     clickSessionHandler,
     clickToSpeaker,
+    className,
   } = props;
   const mainItemRef = useRef<HTMLDivElement>(null);
   const [itemTruncated, setItemTruncated] = useState(false);
@@ -70,7 +72,7 @@ export default function AgendaSession(props: AgendaSessionProps) {
 
   function sessionClick() {
     const { type, enabled, index } = content || {};
-    const session = sessionsIndexMap[index];
+    const session = sessionsMetadataMap[index];
 
     if (
       type !== "SHORT" &&
@@ -102,7 +104,7 @@ export default function AgendaSession(props: AgendaSessionProps) {
 
   return (
     <div
-      className={`c-agenda-main-item c-agenda-main-item-${type} ${
+      className={`${className} c-agenda-main-item c-agenda-main-item-${type} ${
         itemTruncated ? "truncated" : ""
       } ${specificItemClass}`}
       ref={mainItemRef}
